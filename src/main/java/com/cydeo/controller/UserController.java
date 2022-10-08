@@ -55,9 +55,11 @@ public class UserController {
         model.addAttribute("user",userService.findById(username));
 
         //roles ${roles)
+        model.addAttribute("roles",roleService.findAll());
+
 
         //users ${users}
-
+        model.addAttribute("users",userService.findAll());
 
         return "/user/update";
     }
