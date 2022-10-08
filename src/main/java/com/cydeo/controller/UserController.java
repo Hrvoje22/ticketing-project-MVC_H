@@ -66,11 +66,20 @@ public class UserController {
 
 
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute("user") UserDTO user){
+    public String updateUser(@ModelAttribute("user") UserDTO user){ //we can do it without the @ModelAttribute
 
         userService.update(user);
 
         return "redirect:/user/create";
+    }
+
+    @GetMapping("/delete/{username}")
+    public String deleteUser(@PathVariable("username") String username){
+
+        userService.deleteById(username);
+
+        return "redirect:/user/create";
+
     }
 
 
