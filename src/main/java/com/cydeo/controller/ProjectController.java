@@ -86,7 +86,7 @@ public class ProjectController {
 
         UserDTO manager = userService.findById("john@cydeo.com");
 
-        List<ProjectDTO> project =
+        List<ProjectDTO> projects = projectService.findAll();
 
         model.addAttribute("projects",projects);
 
