@@ -82,7 +82,7 @@ public class TaskController {
      */
 
     @PostMapping("/update/{id}")
-    public String updateTask(TaskDTO task){   //or this way
+    public String updateTask(TaskDTO task){   //or this way - id the same from the Task class - Spring knows
 
         taskService.update(task);
 
