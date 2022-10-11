@@ -1,9 +1,11 @@
 package com.cydeo.service.impl;
 
 import com.cydeo.dto.ProjectDTO;
+import com.cydeo.dto.TaskDTO;
 import com.cydeo.dto.UserDTO;
 import com.cydeo.enums.Status;
 import com.cydeo.service.ProjectService;
+import com.cydeo.service.TaskService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +13,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProjectServiceImp extends AbstractMapService<ProjectDTO,String> implements ProjectService {
+
+    private final TaskService taskService;
+
+    public ProjectServiceImp(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     @Override
     public ProjectDTO save(ProjectDTO project) {
@@ -63,8 +71,10 @@ public class ProjectServiceImp extends AbstractMapService<ProjectDTO,String> imp
                         .filter(project -> project.getAssignedManager().equals(manager))
                         .map(project -> {
 
-                            int completeTaskCounts = 5;
-                            int unfinishedTaskCounts = 3;
+                            List<TaskDTO> taskList = taskService.findTasksByManager(manager);
+
+                            int completeTaskCounts = (int) taskList.stream().filter(t -> t.getProject().equals(project) && t.getTaskStatus()==Status.COMPLETE).count();
+                            int unfinishedTaskCounts = (int) taskList.stream().filter(t -> t.getProject().equals(project) && t.getTaskStatus()!=Status.COMPLETE).count();
 
                             project.setCompleteTaskCounts(completeTaskCounts);
                             project.setUnfinishedTaskCounts(unfinishedTaskCounts);
