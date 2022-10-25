@@ -34,7 +34,7 @@ public class UserDTO {
 
 
     @NotBlank
-    @Pattern(regexp = "^\\s{10}$")
+    @Pattern(regexp = "^\\d{10}$")
     private String phone;
 
     @NotNull //because its not a string
@@ -42,6 +42,7 @@ public class UserDTO {
 
     //@NotNull //because its not a string
     private Gender gender;
+
 
 
 
